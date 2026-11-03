@@ -1,0 +1,45 @@
+:root {
+  --sans: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --serif: Cambria, 'Times New Roman', serif;
+  --mono: Consolas, 'Cascadia Code', monospace;
+  --canvas: #f7f6f2;
+  --surface: #fffefa;
+  --surface-hover: #f0f0e9;
+  --ink: #292e27;
+  --muted: #656d5f;
+  --subtle: #a3a69b;
+  --border: #e5e6dd;
+  --receipt-line: #cdd0c4;
+  --sage: #829779;
+  --sage-soft: #eaf0e4;
+  --sage-ink: #4d6646;
+  --sage-border: #d0dcc7;
+  --chart-muted: #c8d2be;
+  --chart-strong: #819776;
+  --button: #2c3429;
+  --button-hover: #45533e;
+  --button-text: #fffefa;
+  --focus: #758d65;
+  --selection: #d6e2ca;
+}
+html[data-theme='dark'] {
+  --canvas: #1c211c;
+  --surface: #252b24;
+  --surface-hover: #323b2f;
+  --ink: #edf0e5;
+  --muted: #a7b09e;
+  --subtle: #77846f;
+  --border: #3a4335;
+  --receipt-line: #56614f;
+  --sage: #a5b694;
+  --sage-soft: #303e2b;
+  --sage-ink: #bdcfac;
+  --sage-border: #506047;
+  --chart-muted: #556b49;
+  --chart-strong: #a8bc94;
+  --button: #c1d1b1;
+  --button-hover: #d9e3cf;
+  --button-text: #24301e;
+  --focus: #b8cf9f;
+  --selection: #4b6240;
+}
