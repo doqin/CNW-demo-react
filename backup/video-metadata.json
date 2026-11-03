@@ -1,0 +1,18 @@
+{
+  "recordedAt": "2026-11-03T04:30:52.721Z",
+  "duration": "00:05:06.12",
+  "width": 1280,
+  "height": 720,
+  "audio": false,
+  "sourceCommit": "b1e075bb05ecf1e8cc114925435bf9e1f5c44e1f",
+  "observedCounts": {
+    "afterTyping": [
+      5,
+      0
+    ],
+    "afterDataChange": [
+      6,
+      1
+    ]
+  }
+}
