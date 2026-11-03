@@ -9,7 +9,7 @@ Ngày kiểm tra: 03/11/2026, máy Windows, Node 22.17.0/npm 10.9.2. Bản web �
 | `npm run lint` | Qua, không có lỗi |
 | `npm test` | 3 file, 7 kiểm tra qua |
 | `npm run build` | Qua, build tĩnh |
-| `npm run test:e2e` | 4 kiểm tra qua trên Chromium |
+| `npm run test:e2e` | 5 kiểm tra qua trên Chromium |
 | `npm audit` | 0 vulnerabilities theo registry tại thời điểm kiểm tra |
 | Số lượng riêng từng thẻ | Tăng Bình nước lên 2 không đổi Trà đào |
 | Giỏ mẫu | 3 đơn vị, 2 dòng, 125.000 đ |
@@ -29,6 +29,8 @@ Screenshot được lấy từ preview thực, không phải bản phác thảo:
 
 ## Video và giới hạn
 
-Video sẽ được xác nhận bằng `backup/video-metadata.json` do script quay ghi lại sau khi mã hóa thành công. Ba ảnh dự phòng được lấy cùng lượt quay. Kết quả kiểm tra ứng dụng không thay cho việc người trình bày tự tập có bấm giờ và thử trên máy chiếu thực của lớp.
+Video MP4 đã được mã hóa: **00:05:06.12**, **1280×720**, không âm thanh, dung lượng khoảng **2,7 MB**. `backup/video-metadata.json` ghi commit nguồn và các số đo quan sát được (5/0, 6/1); ba ảnh dự phòng được lấy cùng lượt quay. Kết quả kiểm tra ứng dụng không thay cho việc người trình bày tự tập có bấm giờ và thử trên máy chiếu thực của lớp.
+
+Review độc lập đã kiểm source, tests và luồng browser thực; xác nhận observer/dialog không làm lệch số đo. Một lỗi tên truy cập của nút reset trên mobile được tái hiện bằng test RED, bổ sung `aria-label` và kiểm tra lại GREEN. Đồng thời các điều khiển tăng/giảm, xóa dòng và reset có vùng bấm ít nhất 44 px.
 
 Chưa xác minh trên phần cứng máy chiếu của lớp hoặc trên máy khác. Môi trường dev có StrictMode và có thể có lượt kiểm tra thêm; số đo dùng cho buổi seminar lấy từ production preview.

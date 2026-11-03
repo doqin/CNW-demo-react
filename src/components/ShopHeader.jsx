@@ -20,7 +20,7 @@ export function ShopHeader({ children }) {
     <div className="header-actions">{children}
       <button className="icon-button" onClick={toggleTheme} aria-label={`Chuyển sang giao diện ${theme === 'light' ? 'tối' : 'sáng'}`} title="Đổi sáng / tối"><Icon name={theme === 'light' ? 'moon' : 'sun'} /></button>
       <span className="header-divider"/>
-      <button className="reset-button" onClick={() => window.location.reload()}><Icon name="reset" size={17}/><span>Đặt lại demo</span></button>
+      <button className="reset-button" aria-label="Đặt lại demo" onClick={() => window.location.reload()}><Icon name="reset" size={17}/><span>Đặt lại demo</span></button>
     </div>
   </div></header>;
 }

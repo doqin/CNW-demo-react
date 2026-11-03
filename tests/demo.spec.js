@@ -64,3 +64,21 @@ for (const viewport of [{ width: 1280, height: 720 }, { width: 1366, height: 768
     }
   });
 }
+
+test('mobile reset retains its accessible name and primary touch targets stay usable', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  const reset = page.locator('.reset-button');
+  await expect(reset).toHaveAccessibleName('Đặt lại demo');
+  const increase = page.getByRole('button', { name: 'Tăng Bình nước', exact: true });
+  for (const target of [reset, increase]) {
+    const box = await target.boundingBox();
+    expect(box.width).toBeGreaterThanOrEqual(44);
+    expect(box.height).toBeGreaterThanOrEqual(44);
+  }
+  await page.getByRole('button', { name: 'Thêm Bình nước vào giỏ', exact: true }).click();
+  const remove = page.getByRole('button', { name: 'Xóa Bình nước khỏi giỏ', exact: true });
+  expect((await remove.boundingBox()).width).toBeGreaterThanOrEqual(44);
+  await reset.click();
+  await expect(page.getByTestId('cart-badge')).toHaveText('0');
+});
