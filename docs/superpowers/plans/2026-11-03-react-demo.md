@@ -1,6 +1,6 @@
 # React Mini Shop Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Triển khai demo React dễ trình bày trong 5–10 phút, giao diện được trau chuốt, chạy local và có repo public riêng.
 
@@ -34,10 +34,10 @@
 
 **Interfaces:** `useQuantity(initial=1,max=10) -> {qty,increase,decrease}`. `useCart() -> {items,addItem,removeItem,totalQuantity,totalPrice}`; `addItem(productId,quantity)`; `removeItem(productId)`. `useTheme() -> {theme,toggleTheme}`.
 
-- [ ] Viết test số lượng độc lập/giới hạn và giỏ cộng dồn/xóa/tổng, chạy và thấy RED vì chưa có chức năng.
-- [ ] Dựng cấu trúc tối thiểu rồi app đủ ba sản phẩm, giỏ và theme; test GREEN.
-- [ ] Áp typography, khoảng cách, artwork và điều khiển có tên truy cập; không viết test màu.
-- [ ] `npm test` qua; commit `feat(shop): add local quantities and shared cart`.
+- [x] Viết test số lượng độc lập/giới hạn và giỏ cộng dồn/xóa/tổng, chạy và thấy RED vì chưa có chức năng.
+- [x] Dựng cấu trúc tối thiểu rồi app đủ ba sản phẩm, giỏ và theme; test GREEN.
+- [x] Áp typography, khoảng cách, artwork và điều khiển có tên truy cập; không viết test màu.
+- [x] `npm test` qua; commit `feat(shop): add local quantities and shared cart`.
 
 ## Task 2: So sánh render và code viewer
 
@@ -45,29 +45,29 @@
 
 **Interfaces:** store `record(id)`, `reset()`, `subscribe(listener)`, `getSnapshot()`. `SalesChart({data,metricId})`; `MemoSalesChart = memo(SalesChart)`. CodeDialog launcher giữ state riêng, `examples` lấy nguồn bằng `?raw`.
 
-- [ ] Viết test ghi chú 5 ký tự cho kết quả 5/0, đổi dữ liệu thành 6/1; observer không gây lặp; source marker thiếu/trùng bị phát hiện. Chạy RED.
-- [ ] Tạo store immutable và Effect theo dõi sau commit; hai chart props ổn định; test GREEN.
-- [ ] Hoàn thiện ba code region source thật, native dialog, Escape/focus restore; mở code không cập nhật cha biểu đồ.
-- [ ] `npm test` qua; commit `feat(demo): show isolated memo comparison and source examples`.
+- [x] Viết test ghi chú 5 ký tự cho kết quả 5/0, đổi dữ liệu thành 6/1; observer không gây lặp; source marker thiếu/trùng bị phát hiện. Chạy RED.
+- [x] Tạo store immutable và Effect theo dõi sau commit; hai chart props ổn định; test GREEN.
+- [x] Hoàn thiện ba code region source thật, native dialog, Escape/focus restore; mở code không cập nhật cha biểu đồ.
+- [x] `npm test` qua; commit `feat(demo): show isolated memo comparison and source examples`.
 
 ## Task 3: Xác minh luồng thực và hoàn thiện trình chiếu
 
 **Files:** `tests/demo.spec.js`, `playwright.config.js`, `scripts/record-demo.mjs`, `backup/`, `.github/workflows/ci.yml`, các CSS/chi tiết UI cần sửa.
 
-- [ ] Viết Playwright cho giỏ 125.000 đ, code dialog, so sánh 5/0→6/1, theme, reset và chỉ dùng localhost.
-- [ ] Chạy trên build preview, sửa lỗi theo bằng chứng. Xem screenshot ở 1280×720, 1366×768 và mobile; kiểm tràn ngang và chiều cao desktop.
-- [ ] Hoàn thiện code dialog trên máy chiếu, source markers, câu mô tả số đo; `npm run lint`, `npm test`, `npm run build`, `npm run test:e2e` đều qua.
-- [ ] Quay MP4 720p khoảng 5 phút bằng Playwright + ffmpeg local, 3 ảnh dự phòng, xác minh metadata video.
-- [ ] Commit `test(demo): verify seminar flow and record offline backup`.
+- [x] Viết Playwright cho giỏ 125.000 đ, code dialog, so sánh 5/0→6/1, theme, reset và chỉ dùng localhost.
+- [x] Chạy trên build preview, sửa lỗi theo bằng chứng. Xem screenshot ở 1280×720, 1366×768 và mobile; kiểm tràn ngang và chiều cao desktop.
+- [x] Hoàn thiện code dialog trên máy chiếu, source markers, câu mô tả số đo; `npm run lint`, `npm test`, `npm run build`, `npm run test:e2e` đều qua.
+- [x] Quay MP4 720p khoảng 5 phút bằng Playwright + ffmpeg local, 3 ảnh dự phòng, xác minh metadata video.
+- [x] Commit `test(demo): verify seminar flow and record offline backup`.
 
 ## Task 4: Tài liệu, review và repo public
 
 **Files:** `README.md`, `docs/{demo-script,slide-mapping,rehearsal,qa,design-notes,verification,implementation-log}.md`, `LICENSE`.
 
-- [ ] Viết hướng dẫn và kịch bản 5/7/10 phút có lời nói/thao tác/giá trị đích; ghi cách chạy video và kiểm tra trước giờ trình bày.
-- [ ] Reviewer độc lập kiểm toàn nhánh theo spec/plan và các điểm Review Focus; sửa Critical/Important và chạy kiểm tra liên quan.
-- [ ] Xác minh GitHub user `thqhuong`, repo chưa tồn tại; tạo public `SE347-React-Seminar-Demo`, push bản ổn định main/develop.
-- [ ] Xác nhận URL repo, visibility, commit và kiểm tra CI. Lưu đường dẫn demo trong tài liệu môn học.
+- [x] Viết hướng dẫn và kịch bản 5/7/10 phút có lời nói/thao tác/giá trị đích; ghi cách chạy video và kiểm tra trước giờ trình bày.
+- [x] Reviewer độc lập kiểm toàn nhánh theo spec/plan và các điểm Review Focus; sửa Critical/Important và chạy kiểm tra liên quan.
+- [x] Xác minh GitHub user `thqhuong`, repo chưa tồn tại; tạo public `SE347-React-Seminar-Demo`, push bản ổn định main/develop.
+- [x] Xác nhận URL repo, visibility, commit và kiểm tra CI. Lưu đường dẫn demo trong tài liệu môn học.
 
 ## Self-review
 

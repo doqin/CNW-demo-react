@@ -20,6 +20,7 @@ Ngày kiểm tra: 03/11/2026, máy Windows, Node 22.17.0/npm 10.9.2. Bản web �
 | Đặt lại demo | Giỏ 0, thẻ Bình nước 1, theme sáng, màn Cửa hàng |
 | Request trình duyệt | Chỉ localhost; chặn mọi origin ngoài không ảnh hưởng luồng |
 | Bố cục | Không tràn ngang 1280×720, 1366×768, 390×844; không cuộn dọc ở hai viewport desktop |
+| GitHub Actions | [Run 41579057987](https://github.com/thqhuong/SE347-React-Seminar-Demo/actions/runs/41579057987) thành công, gồm npm ci, lint, unit tests, build và Playwright trên Ubuntu |
 
 Các file test: `src/shop.test.jsx`, `src/features/render/render.test.jsx`, `src/teaching/extractRegion.test.js`, `tests/demo.spec.js`.
 

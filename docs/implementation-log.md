@@ -13,3 +13,5 @@ Plan: `docs/superpowers/plans/2026-11-03-react-demo.md`.
 - Runtime: khóa jsdom 26.1.0 để tương thích Node 22.17.0; override minimatch 11.0.4 cho công cụ lint. `npm audit`: 0 vulnerabilities, lint qua.
 - Final review: reviewer độc lập xác nhận giỏ/phép đo/luồng trình bày đúng; phát hiện reset mobile mất tên truy cập. Ruling: xem đây là lỗi sử dụng với trình đọc màn hình cần sửa, không trì hoãn dù reviewer gọi Minor. Test tái hiện RED trước khi thêm aria-label, rồi xác minh lại.
 - Final review, phạm vi còn xác minh: video được agent kiểm riêng bằng metadata/khung hình; GitHub/CI kiểm sau khi push. Khả năng đọc trên máy chiếu thật và tốc độ nói vẫn do người trình bày diễn tập, đã ghi trong checklist.
+- Task 4: complete — repo public https://github.com/thqhuong/SE347-React-Seminar-Demo đã xác minh visibility và main; GitHub Actions run 41579057987 thành công. Có README bàn giao trong thư mục seminar của repo môn học. Không còn phát hiện review phải trì hoãn.
+- Final verification: lint, 7 unit/component tests, build và 5 Playwright tests đều qua; audit production không báo mục; toàn bộ link tài liệu nội bộ tồn tại; MP4 được decode một khung thật để kiểm tra hình.
