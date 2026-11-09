@@ -29,7 +29,8 @@ await page.evaluate(() => {
   });
 });
 
-const hold = ms => page.waitForTimeout(ms);
+const speed = Number(process.env.RECORD_SPEED ?? 1);
+const hold = ms => page.waitForTimeout(ms / speed);
 async function click(locator) {
   const box = await locator.boundingBox();
   if (!box) throw new Error('Recording target is not visible');
@@ -38,6 +39,14 @@ async function click(locator) {
   await locator.click();
 }
 const button = name => page.getByRole('button', { name, exact: true });
+const editor = file => page.getByRole('textbox', { name: `Mã nguồn ${file}`, exact: true });
+async function replaceInEditor(file, from, to) {
+  const box = editor(file);
+  await click(box);
+  const value = await box.inputValue();
+  if (!value.includes(from)) throw new Error(`Missing ${from} in ${file}`);
+  await box.fill(value.replace(from, to));
+}
 
 try {
   console.log('Recording 1/3: props, state and cart');
@@ -45,23 +54,21 @@ try {
   await click(button('Tăng Bình nước'));
   await page.screenshot({ path: path.join(output, '01-local-state.png') });
   await hold(22000);
-  await click(button('Xem code'));
-  await hold(35000);
-  await page.keyboard.press('Escape');
+  await replaceInEditor('ProductCard.jsx', 'useQuantity()', 'useQuantity(3)');
+  await expect(page.getByLabel('Số lượng chọn Trà đào', { exact: true })).toHaveText('3');
+  await hold(25000);
+  await click(button('Đặt lại code'));
+  await expect(page.getByLabel('Số lượng chọn Trà đào', { exact: true })).toHaveText('1');
   await hold(5000);
+  await click(button('Tăng Bình nước'));
   await click(button('Thêm Bình nước vào giỏ'));
   await hold(12000);
   await click(button('Thêm Trà đào vào giỏ'));
   await expect(page.getByTestId('cart-total')).toHaveText('125.000 đ');
   await page.screenshot({ path: path.join(output, '02-shared-cart.png') });
   await hold(18000);
-  await click(button('Xem code'));
-  await click(page.getByRole('dialog').getByRole('button', { name: 'Context giỏ hàng', exact: true }));
+  await click(page.getByRole('tab', { name: 'CartContext.jsx', exact: true }));
   await hold(35000);
-  await page.locator('.code-scroll').evaluate(element => { element.scrollTop = element.scrollHeight; });
-  await hold(10000);
-  await page.keyboard.press('Escape');
-  await hold(5000);
 
   console.log('Recording 2/3: memo comparison');
   await click(page.getByRole('button', { name: /So sánh render/ }));
@@ -73,10 +80,6 @@ try {
   await expect(page.getByTestId('plain-count')).toHaveText('5');
   await expect(page.getByTestId('memo-count')).toHaveText('0');
   await hold(20000);
-  await click(button('Xem code'));
-  await hold(35000);
-  await page.keyboard.press('Escape');
-  await hold(5000);
   await click(button('Đổi dữ liệu'));
   await expect(page.getByTestId('plain-count')).toHaveText('6');
   await expect(page.getByTestId('memo-count')).toHaveText('1');

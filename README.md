@@ -1,6 +1,6 @@
-# React Mini Shop — SE347.R13
+# React Playground — SE347.R13
 
-Một cửa hàng nhỏ để minh họa **props/state, Context và React.memo** trong một lượt demo 5–10 phút. Chuẩn bị cho seminar ngày **18/11/2026**, người phụ trách demo: **Trần Hữu Quốc Hướng**.
+Một sân chơi React (code bên trái, kết quả bên phải) với một cửa hàng nhỏ để minh họa **props/state, Context và React.memo** trong một lượt demo 5–10 phút. Chuẩn bị cho seminar ngày **18/11/2026**, người phụ trách demo: **Trần Hữu Quốc Hướng**.
 
 ![Màn cửa hàng](docs/images/shop.png)
 
@@ -21,13 +21,17 @@ Mở **[http://127.0.0.1:4173](http://127.0.0.1:4173)**. Giữ terminal chạy. 
 
 Để phát triển và sửa code: `npm run dev`, mở cổng 5173. **Lúc trình bày dùng preview**, vì số đếm được xác minh trên production build. Không mở `dist/index.html` bằng `file://`.
 
+## Cách dùng
+
+Màn hình chia đôi: **code bên trái, kết quả bên phải**. Sửa code, khoảng 0,3 giây sau phần xem trước tự chạy lại. Nếu code sai cú pháp, lỗi hiện ngay dưới trình soạn thảo và bản chạy gần nhất vẫn được giữ. **Đặt lại code** khôi phục code gốc của bài đang mở. Nút sáng/tối ở góc phải. Trong trình soạn thảo, `Tab` thụt lề, `Shift+Tab` bỏ thụt lề, `Esc` rồi `Tab` để rời khỏi.
+
 ## Một lượt trình bày
 
-1. **Props và state:** tăng Bình nước lên 2. Thành tiền là 100.000 đ; hai thẻ còn lại vẫn giữ số lượng 1. Bấm **Xem code** để giải thích dữ liệu đầu vào, Custom Hook và phép nhân giá × số lượng.
-2. **Context:** thêm Bình nước ×2 và Trà đào ×1. Huy hiệu là **3**, giỏ có **2 dòng**, tổng **125.000 đ**. Trong hộp code chọn **Context giỏ hàng**.
-3. **memo:** chuyển sang **So sánh render**, bấm **Bắt đầu phép đo**, gõ từng ký tự `react`. Kết quả **5 / 0**. Mở và đóng code; số đo giữ nguyên. Bấm **Đổi dữ liệu**, kết quả **6 / 1**.
+1. **Props và state:** tăng Bình nước lên 2. Thành tiền là 100.000 đ; hai thẻ còn lại vẫn giữ số lượng 1. Trong `ProductCard.jsx` đổi `useQuantity()` thành `useQuantity(3)` để thấy mọi thẻ bắt đầu từ 3.
+2. **Context:** thêm Bình nước ×2 và Trà đào ×1. Huy hiệu là **3**, giỏ có **2 dòng**, tổng **125.000 đ**. Mở tab `CartContext.jsx` để giải thích nguồn state chung.
+3. **memo:** chuyển sang **So sánh render**, bấm **Bắt đầu phép đo**, gõ từng ký tự `react`. Kết quả **5 / 0**. Bấm **Đổi dữ liệu**, kết quả **6 / 1**. Trong `SalesChart.jsx` đổi `memo(SalesChart)` thành `SalesChart` rồi đo lại: hai bên cùng tăng.
 
-**Đặt lại demo** đưa toàn bộ về đầu. Nút sáng/tối dùng Context riêng. Ghi chú không ảnh hưởng dữ liệu biểu đồ; bộ đếm ghi lại Effect theo dõi sau commit, không đếm mọi lần gọi hàm render hoặc số nút DOM bị sửa.
+Mỗi bài giữ code đã sửa khi chuyển qua lại giữa hai bài; tải lại trang sẽ xóa mọi chỉnh sửa. Ghi chú không ảnh hưởng dữ liệu biểu đồ; bộ đếm ghi lại Effect theo dõi sau commit, không đếm mọi lần gọi hàm render hoặc số nút DOM bị sửa. Mỗi lần code chạy lại, phần xem trước được dựng lại từ đầu và bộ đếm về 0.
 
 ## Tài liệu để tập trước buổi seminar
 
@@ -53,22 +57,24 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Unit/component tests kiểm state, giỏ và bộ đo. Playwright chạy luồng thật trên preview, kiểm cả focus/Escape, theme, reset, request chỉ về localhost và các kích thước 1280×720, 1366×768, 390×844. Cấu hình tự khởi động preview nếu chưa chạy.
+Unit/component tests kiểm trình biên dịch trong trình duyệt, state, giỏ, bộ đo và luồng sửa code. Playwright chạy luồng thật trên preview: sửa code và thấy kết quả, lỗi cú pháp, đặt lại, thao tác bàn phím trong trình soạn thảo, theme, request chỉ về localhost, bố cục chia đôi ở 1280×720, 1366×768, 1920×1080 và bố cục điện thoại 390×844. Cấu hình tự khởi động preview nếu chưa chạy.
 
 Để quay lại video: khởi động preview ở một terminal, rồi chạy `npm run record` ở terminal khác. Script điều khiển app thật khoảng 5 phút, xác nhận số đo và tạo MP4 bằng ffmpeg. Phần quay dùng Playwright và ffmpeg-static trong dev dependencies; các gói này không được gửi vào bản web build.
 
 ## Cấu trúc cần biết
 
 ```text
-src/components/ProductCard.jsx           props và local state
-src/hooks/useQuantity.js                 logic tăng/giảm, mỗi thẻ độc lập
-src/context/CartContext.jsx              nguồn state chung của giỏ
-src/features/render/RenderComparison.jsx cha giữ ghi chú và dữ liệu
-src/features/render/SalesChart.jsx       một component, hai cách sử dụng
+src/lessons/shop/*                       code học viên sửa được ở bài 1 (ProductCard, useQuantity, CartContext, CartPanel, App)
+src/lessons/render/*                     code sửa được ở bài 2 (SalesChart, App)
+src/lessons/index.js                     danh sách bài, ghi chú, file nào hiện ở tab nào
+src/playground/compile.js                biên dịch JSX bằng sucrase và chạy các file trong trình duyệt
+src/playground/Playground.jsx            trình soạn thảo bên trái, xem trước bên phải
 src/features/render/metricsStore.js      kho số liệu quan sát tách riêng
-src/teaching/codeExamples.js             trích code từ file thật bằng ?raw
-src/tokens.css                          màu và font của cả hai theme
+src/components, src/data                 phần dùng chung, không sửa trong bài
+src/tokens.css                           màu, font và màu cú pháp của cả hai theme
 ```
+
+Các file trong `src/lessons` là module thật với import tương đối thật; chính chúng được nạp bằng `?raw` vào trình soạn thảo và chạy lại khi bạn sửa. Chỉ import `react` và các file trong bài (hoặc các module dùng chung có sẵn trong `src/components`, `src/data`).
 
 Không bật React Compiler để minh họa riêng tác dụng của `memo`. Không dùng Redux/Zustand/Next.js cho demo nhỏ này. Đây là ví dụ giảng dạy; dữ liệu chỉ giữ trong bộ nhớ và được xóa khi tải lại trang.
 

@@ -1,7 +1,7 @@
 :root {
   --sans: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   --serif: Cambria, 'Times New Roman', serif;
-  --mono: Consolas, 'Cascadia Code', monospace;
+  --mono: 'Cascadia Code', 'JetBrains Mono', Consolas, ui-monospace, monospace;
   --canvas: #f7f6f2;
   --surface: #fffefa;
   --surface-hover: #f0f0e9;
@@ -21,6 +21,16 @@
   --button-text: #fffefa;
   --focus: #758d65;
   --selection: #d6e2ca;
+  --danger: #a13d2d;
+  --danger-soft: #f9ebe6;
+  --code-bg: #fbfaf5;
+  --code-gutter: #8b9285;
+  --tok-comment: #66705f;
+  --tok-string: #8a5a00;
+  --tok-number: #9a4a12;
+  --tok-keyword: #b0305a;
+  --tok-tag: #2a7446;
+  --tok-builtin: #1d6690;
 }
 html[data-theme='dark'] {
   --canvas: #1c211c;
@@ -42,4 +52,14 @@ html[data-theme='dark'] {
   --button-text: #24301e;
   --focus: #b8cf9f;
   --selection: #4b6240;
+  --danger: #f0a090;
+  --danger-soft: #3d2622;
+  --code-bg: #1a1f1a;
+  --code-gutter: #7a8774;
+  --tok-comment: #8a9885;
+  --tok-string: #e5c07b;
+  --tok-number: #d19a66;
+  --tok-keyword: #e58fa3;
+  --tok-tag: #7ec699;
+  --tok-builtin: #7cc4e8;
 }

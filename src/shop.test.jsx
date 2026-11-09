@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { CartProvider, useCart } from './context/CartContext.jsx';
-import { useQuantity } from './hooks/useQuantity.js';
+import { CartProvider, useCart } from './lessons/shop/CartContext.jsx';
+import { useQuantity } from './lessons/shop/useQuantity.js';
 
 function Quantity({ id }) {
   const { qty, increase, decrease } = useQuantity();
