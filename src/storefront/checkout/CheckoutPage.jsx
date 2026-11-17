@@ -75,7 +75,7 @@ function CheckoutForm({ onComplete }) {
   const fields = [
     ['fullName', 'Họ và tên', 'Ví dụ: Nguyễn An', 'name'],
     ['phone', 'Số điện thoại', 'Ví dụ: 0901234567', 'tel'],
-    ['address', 'Địa chỉ nhận hàng', 'Số nhà, đường, phường và tỉnh/thành phố', 'street-address'],
+    ['address', 'Địa chỉ nhận hàng', 'Số nhà, đường, phường, tỉnh', 'street-address'],
   ];
   return (
     <div className="checkout-page wrap">

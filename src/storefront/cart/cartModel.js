@@ -22,6 +22,12 @@ export function setCartQuantity(items, productId, quantity, products = catalogBy
     products,
   );
 }
+export const FREE_SHIPPING_THRESHOLD = 150000;
+export const SHIPPING_FEE = 20000;
+/** Single source of truth for the delivery fee. */
+export function shippingFor(subtotal) {
+  return subtotal > 0 && subtotal < FREE_SHIPPING_THRESHOLD ? SHIPPING_FEE : 0;
+}
 export function getCartQuote(items, products = catalogById) {
   const clean = normalizeCart(items, products);
   const totalQuantity = clean.reduce((sum, item) => sum + item.quantity, 0);
@@ -29,6 +35,6 @@ export function getCartQuote(items, products = catalogById) {
     (sum, item) => sum + products[item.productId].price * item.quantity,
     0,
   );
-  const shipping = subtotal > 0 && subtotal < 150000 ? 20000 : 0;
+  const shipping = shippingFor(subtotal);
   return { totalQuantity, subtotal, shipping, total: subtotal + shipping };
 }

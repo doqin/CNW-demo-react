@@ -10,6 +10,7 @@ const Product = lazy(() => import('./storefront/product/ProductPage.jsx'));
 const Cart = lazy(() => import('./storefront/cart/CartPage.jsx'));
 const Checkout = lazy(() => import('./storefront/checkout/CheckoutPage.jsx'));
 const Confirmation = lazy(() => import('./storefront/checkout/ConfirmationPage.jsx'));
+const Group = lazy(() => import('./storefront/group/GroupPage.jsx'));
 const Learn = lazy(() => import('./features/learn/LearnApp.jsx'));
 function LearningRoute() {
   const { theme, toggleTheme, resetStorefront } = useStore();
@@ -66,6 +67,14 @@ export default function App() {
               element={
                 <Page>
                   <Checkout />
+                </Page>
+              }
+            />
+            <Route
+              path="group"
+              element={
+                <Page>
+                  <Group />
                 </Page>
               }
             />

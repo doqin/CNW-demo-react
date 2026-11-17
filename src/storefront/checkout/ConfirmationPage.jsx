@@ -24,6 +24,14 @@ export default function ConfirmationPage() {
   }
   return (
     <div className="confirmation-page wrap">
+      <div className="confirm-flourish" aria-hidden="true">
+        {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+          <svg key={i} viewBox="0 0 24 24" style={{ "--i": i, width: 16 + ((i * 5) % 12) }}>
+            <path d="M12 2C6 6 4 12 6 20c8-2 12-8 12-14-2-2-4-3-6-4Z" />
+            <path d="M6 20 15 8" fill="none" />
+          </svg>
+        ))}
+      </div>
       <motion.div
         className="success-mark"
         initial={{ opacity: 0, transform: reduce ? 'none' : 'scale(.95)' }}

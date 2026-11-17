@@ -2,6 +2,7 @@ import { Link } from 'react-router';
 import { useStore } from '../StorefrontProviders.jsx';
 import { CartLines } from './CartLines.jsx';
 import { OrderSummary } from './OrderSummary.jsx';
+import { UndoToast } from './UndoToast.jsx';
 import { StoreIcon } from '../ui/Icons.jsx';
 export default function CartPage() {
   const { items, quote } = useStore();
@@ -13,6 +14,7 @@ export default function CartPage() {
         </h1>
         <p>Kiểm tra một chút, rồi để OneSip chuẩn bị nhé.</p>
       </div>
+      <UndoToast />
       {items.length ? (
         <div className="purchase-grid">
           <div>

@@ -1,11 +1,12 @@
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { addCartItem, setCartQuantity, getCartQuote } from './cart/cartModel.js';
+import { addCartItem, setCartQuantity, getCartQuote, normalizeCart } from './cart/cartModel.js';
 import { readCart, writeCart, getStorage, CART_KEY } from './cart/cartStorage.js';
 import { emptyDraft } from './checkout/checkoutValidation.js';
 import { readReceipt, RECEIPT_KEY } from './checkout/receiptStorage.js';
 import { resetDemoOrders } from './checkout/demoOrderService.js';
 import { catalogById } from './data/catalog.js';
+import { GROUP_KEY, ME_KEY } from './group/useGroup.js';
 const StoreContext = createContext(null);
 export function StorefrontProviders({ children }) {
   const [items, setItems] = useState(() => readCart());
@@ -13,15 +14,24 @@ export function StorefrontProviders({ children }) {
   const [receipt, setReceipt] = useState(() => readReceipt());
   const [pending, setPending] = useState(false);
   const [cartNotice, setCartNotice] = useState('');
+  // Last line removed from the cart, kept briefly so the user can undo.
+  const [lastRemoved, setLastRemoved] = useState(null);
+  const dismissUndo = useCallback(() => setLastRemoved(null), []);
   const [storageWarning, setStorageWarning] = useState(!getStorage());
   const [theme, setTheme] = useState(() => {
     try {
-      return getStorage()?.getItem('se347.theme.v1') === 'dark' ? 'dark' : 'light';
+      const saved = getStorage()?.getItem('se347.theme.v1');
+      if (saved === 'dark' || saved === 'light') return saved;
+      return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     } catch {
       return 'light';
     }
   });
   const abortRef = useRef(null);
+  const itemsRef = useRef(items);
+  useEffect(() => {
+    itemsRef.current = items;
+  }, [items]);
   const navigate = useNavigate();
   useEffect(() => {
     let active = true;
@@ -46,21 +56,42 @@ export function StorefrontProviders({ children }) {
     const product = catalogById[id];
     if (!product) return;
     const limit = Math.min(99, product.stock);
-    const room = limit - (items.find((item) => item.productId === id)?.quantity || 0);
+    // Use the latest cart (not this render's snapshot) so rapid adds report what really happened.
+    const current = itemsRef.current;
+    const qtyOf = (list) => list.find((item) => item.productId === id)?.quantity || 0;
+    const next = addCartItem(current, id, quantity);
+    const added = qtyOf(next) - qtyOf(current);
+    itemsRef.current = next;
+    const name = product.name.toLowerCase();
     setCartNotice(
-      room <= 0
-        ? `Giỏ đã đạt giới hạn ${limit} ${product.name.toLowerCase()}.`
-        : quantity > room
-          ? `Đã thêm ${room} ${product.name.toLowerCase()}. Giỏ đã đạt giới hạn ${limit}.`
-          : `Đã thêm ${quantity} ${product.name.toLowerCase()} vào giỏ.`,
+      added <= 0
+        ? `Giỏ đã đạt giới hạn ${limit} ${name}.`
+        : added < quantity
+          ? `Đã thêm ${added} ${name}. Giỏ đã đạt giới hạn ${limit}.`
+          : `Đã thêm ${quantity} ${name} vào giỏ.`,
     );
-    setItems((current) => addCartItem(current, id, quantity));
+    setItems(next);
   };
   const setQuantity = (id, quantity) => {
     if (!pending) setItems((current) => setCartQuantity(current, id, quantity));
   };
   const removeItem = (id) => {
-    if (!pending) setItems((current) => current.filter((item) => item.productId !== id));
+    if (pending) return;
+    const index = items.findIndex((item) => item.productId === id);
+    if (index < 0) return;
+    setLastRemoved({ item: items[index], index, name: catalogById[id]?.name || '' });
+    setItems((current) => current.filter((item) => item.productId !== id));
+  };
+  const undoRemove = () => {
+    if (!lastRemoved || pending) return;
+    const { item, index } = lastRemoved;
+    setItems((current) => {
+      if (current.some((line) => line.productId === item.productId)) return current;
+      const next = [...current];
+      next.splice(Math.min(index, next.length), 0, item);
+      return normalizeCart(next);
+    });
+    setLastRemoved(null);
   };
   function resetStorefront() {
     abortRef.current?.abort();
@@ -72,6 +103,8 @@ export function StorefrontProviders({ children }) {
     try {
       getStorage()?.removeItem(CART_KEY);
       getStorage('sessionStorage')?.removeItem(RECEIPT_KEY);
+      getStorage()?.removeItem(GROUP_KEY);
+      getStorage()?.removeItem(ME_KEY);
     } catch {
       /* Reset memory even when storage is blocked. */
     }
@@ -86,6 +119,9 @@ export function StorefrontProviders({ children }) {
         setQuantity,
         removeItem,
         clearCart: () => setItems([]),
+        replaceCart: (next) => {
+          if (!pending) setItems(normalizeCart(next));
+        },
         draft,
         setDraft,
         receipt,
@@ -95,6 +131,9 @@ export function StorefrontProviders({ children }) {
         abortRef,
         storageWarning,
         cartNotice,
+        lastRemoved,
+        undoRemove,
+        dismissUndo,
         theme,
         toggleTheme: () => setTheme((t) => (t === 'light' ? 'dark' : 'light')),
         resetStorefront,

@@ -74,7 +74,9 @@ describe('OneSip catalog and cart', () => {
     expect(selectProducts({ category: 'coffee', sort: 'price-asc' }).map((p) => p.price)).toEqual([
       29000, 39000,
     ]);
-    expect(selectProducts({ available: true }).some((p) => p.stock === 0)).toBe(false);
+    const all = selectProducts({});
+    expect(all.at(-1).stock).toBe(0);
+    expect(all.slice(0, -1).every((p) => p.stock > 0)).toBe(true);
   });
 });
 describe('demo checkout', () => {

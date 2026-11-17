@@ -5,6 +5,7 @@ import { ProductTile } from '../catalog/ProductTile.jsx';
 import { ImageWithFallback } from '../ui/ImageWithFallback.jsx';
 import { StoreIcon } from '../ui/Icons.jsx';
 import { storeMotion } from '../motion.js';
+import { SipSuggestion } from './SipSuggestion.jsx';
 
 export default function HomePage() {
   const reduce = useReducedMotion();
@@ -75,6 +76,7 @@ export default function HomePage() {
           Mang theo mỗi ngày <StoreIcon name="arrow" size={17} />
         </Link>
       </div>
+      <SipSuggestion />
       <section className="featured-section wrap">
         <div className="section-heading">
           <div>

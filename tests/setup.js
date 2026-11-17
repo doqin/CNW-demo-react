@@ -13,4 +13,8 @@ if (!globalThis.IntersectionObserver) {
   };
 }
 
+// Unit tests never reach the network: the home page weather card falls back to time-only
+// suggestions. Tests that need weather stub `fetch` themselves.
+globalThis.fetch = () => Promise.reject(new TypeError('Network disabled in unit tests'));
+
 afterEach(cleanup);

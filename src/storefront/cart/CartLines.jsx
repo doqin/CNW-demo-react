@@ -1,5 +1,4 @@
 import { Link } from 'react-router';
-import { motion } from 'motion/react';
 import { catalogById, formatPrice } from '../data/catalog.js';
 import { useStore } from '../StorefrontProviders.jsx';
 import { QuantityControl } from './QuantityControl.jsx';
@@ -12,12 +11,7 @@ export function CartLines({ lastAddedProductId, onNavigate }) {
       {items.map((item) => {
         const p = catalogById[item.productId];
         return (
-          <motion.li
-            layout="position"
-            transition={{ duration: 0.18 }}
-            key={p.id}
-            className={lastAddedProductId === p.id ? 'last-added' : ''}
-          >
+          <li key={p.id} className={lastAddedProductId === p.id ? 'last-added' : ''}>
             <Link to={`/products/${p.slug}`} onClick={onNavigate} className="cart-line-image">
               <ImageWithFallback src={p.thumbnail} alt={p.name} />
             </Link>
@@ -45,7 +39,7 @@ export function CartLines({ lastAddedProductId, onNavigate }) {
                 <StoreIcon name="trash" size={17} />
               </button>
             </div>
-          </motion.li>
+          </li>
         );
       })}
     </ul>

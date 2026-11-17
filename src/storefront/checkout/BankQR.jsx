@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
-import QRCode from 'qrcode';
+import { useState } from 'react';
 import { BANK, buildVietQR } from './vietqr.js';
+import { useQrImage } from './useQrImage.js';
 import { formatPrice } from '../data/catalog.js';
 import { StoreIcon } from '../ui/Icons.jsx';
 export function BankQR({ amount, onAmountChange, reference, total, disabled = false }) {
-  const [qr, setQr] = useState(null);
   const [copyState, setCopyState] = useState('');
   let payload = '';
   try {
@@ -12,25 +11,7 @@ export function BankQR({ amount, onAmountChange, reference, total, disabled = fa
   } catch {
     /* Invalid input must not display a stale payment code. */
   }
-  useEffect(() => {
-    let current = true;
-    if (payload)
-      QRCode.toDataURL(payload, {
-        width: 300,
-        margin: 4,
-        errorCorrectionLevel: 'M',
-        color: { dark: '#182d20', light: '#ffffff' },
-      })
-        .then((url) => {
-          if (current) setQr({ payload, url });
-        })
-        .catch(() => {
-          if (current) setQr({ payload, error: true });
-        });
-    return () => {
-      current = false;
-    };
-  }, [payload]);
+  const qr = useQrImage(payload);
   async function copyAccount() {
     try {
       await navigator.clipboard.writeText(BANK.account);
@@ -39,7 +20,7 @@ export function BankQR({ amount, onAmountChange, reference, total, disabled = fa
       setCopyState('Bạn có thể sao chép số 0825730557 ở trên.');
     }
   }
-  const ready = payload && qr?.payload === payload;
+  const ready = payload && qr.ready;
   return (
     <section className="bank-qr" aria-labelledby="bank-qr-title">
       <div className="bank-qr-heading">
@@ -53,7 +34,7 @@ export function BankQR({ amount, onAmountChange, reference, total, disabled = fa
         <div className="qr-visual" aria-busy={!!payload && !ready}>
           {!payload ? (
             <p>Nhập số tiền hợp lệ để tạo QR.</p>
-          ) : ready && !qr.error ? (
+          ) : ready && qr.url ? (
             <img
               src={qr.url}
               width="260"
@@ -100,7 +81,7 @@ export function BankQR({ amount, onAmountChange, reference, total, disabled = fa
           </p>
           <span className="field-caption">Nội dung chuyển khoản</span>
           <strong className="transfer-reference">{reference}</strong>
-          {ready && !qr.error && (
+          {ready && qr.url && (
             <a
               className="text-link qr-download"
               href={qr.url}

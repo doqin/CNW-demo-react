@@ -27,7 +27,14 @@ export default function LearnApp({ theme: sharedTheme, onToggleTheme, onResetSto
 
   return (
     <div className="learn-app app">
-      <a className="skip-link" href="#main">
+      <a
+        className="skip-link"
+        href="#main"
+        onClick={(e) => {
+          e.preventDefault();
+          document.getElementById('main')?.focus();
+        }}
+      >
         Đến nội dung chính
       </a>
       <header className="topbar">
@@ -90,7 +97,7 @@ export default function LearnApp({ theme: sharedTheme, onToggleTheme, onResetSto
           </button>
         </div>
       </header>
-      <main id="main" className="app-main">
+      <main id="main" className="app-main" tabIndex={-1}>
         <Playground
           key={`${project.id}-${resets}`}
           project={project}

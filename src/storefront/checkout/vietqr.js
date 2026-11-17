@@ -1,3 +1,4 @@
+import { removeDiacritics } from '../utils/text.js';
 export const BANK = { name: 'MBBank', bin: '970422', account: '0825730557' };
 const tlv = (id, value) => id + String(value.length).padStart(2, '0') + value;
 export function crc16(text) {
@@ -14,11 +15,7 @@ export function buildVietQR({ amount, reference = 'ONESIP' }) {
   if (!Number.isSafeInteger(amount) || amount < 1 || amount > 999999999)
     throw Error('Số tiền phải là số nguyên từ 1 đến 999.999.999 đ.');
   const note =
-    String(reference)
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/đ/g, 'd')
-      .replace(/Đ/g, 'D')
+    removeDiacritics(reference)
       .replace(/[^a-zA-Z0-9 -]/g, '')
       .slice(0, 25)
       .trim() || 'ONESIP';

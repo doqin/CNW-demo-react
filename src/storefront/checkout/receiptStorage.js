@@ -1,4 +1,5 @@
 import { getStorage } from '../cart/cartStorage.js';
+import { shippingFor } from '../cart/cartModel.js';
 export const RECEIPT_KEY = 'se347.storefront.receipt.v1';
 export function isReceipt(value) {
   if (
@@ -32,7 +33,7 @@ export function isReceipt(value) {
   if (
     !Number.isSafeInteger(subtotal) ||
     value.subtotal !== subtotal ||
-    value.shipping !== (subtotal < 150000 ? 20000 : 0) ||
+    value.shipping !== shippingFor(subtotal) ||
     value.total !== subtotal + value.shipping
   )
     return false;

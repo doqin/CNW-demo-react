@@ -1,56 +1,41 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
-import { motion, useAnimationControls, useReducedMotion } from 'motion/react';
 import { useStore } from '../StorefrontProviders.jsx';
 import { StoreIcon } from '../ui/Icons.jsx';
 import { OrderSummary } from './OrderSummary.jsx';
 import { CartLines } from './CartLines.jsx';
-import { storeMotion } from '../motion.js';
+import { UndoToast } from './UndoToast.jsx';
 export function CartDrawer({ open, onClose, lastAddedProductId, keyboardOpen = false }) {
   const dialog = useRef(null);
-  const controls = useAnimationControls();
-  const reduce = useReducedMotion();
   const immediate = useRef(false);
   const { items, quote, cartNotice } = useStore();
+  // Plain CSS slide (see .cart-dialog[data-state] in storefront.css): the browser runs the
+  // transform on the compositor, so a busy React render when "+" is clicked can't make it stutter.
   useEffect(() => {
     const el = dialog.current;
-    let active = true;
-    const previousOverflow = document.body.style.overflow;
+    let timer;
     if (open) {
-      if (!el.open) el.showModal();
+      if (!el.open) {
+        el.dataset.state = 'closed';
+        el.dataset.instant = keyboardOpen ? 'true' : '';
+        el.showModal();
+        void el.offsetWidth; // commit the off-screen position before sliding in
+      }
       document.body.style.overflow = 'hidden';
-      if (reduce || keyboardOpen) controls.set({ transform: 'translateX(0%)', opacity: 1 });
-      else
-        controls.start({
-          transform: 'translateX(0%)',
-          opacity: 1,
-          transition: { duration: 0.26, ease: storeMotion.drawer },
-        });
+      el.dataset.state = 'open';
     } else if (el.open) {
+      el.dataset.instant = immediate.current ? 'true' : '';
+      el.dataset.state = 'closed';
       const finish = () => {
-        if (active) {
-          el.close();
-          document.body.style.overflow = '';
-        }
+        el.close();
+        document.body.style.overflow = '';
       };
-      if (reduce || immediate.current) {
-        controls.set({ transform: 'translateX(100%)', opacity: 0 });
-        finish();
-      } else
-        controls
-          .start({
-            transform: 'translateX(100%)',
-            opacity: 0,
-            transition: { duration: 0.2, ease: storeMotion.drawer },
-          })
-          .then(finish);
+      if (immediate.current) finish();
+      else timer = setTimeout(finish, 240);
     }
     immediate.current = false;
-    return () => {
-      active = false;
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [open, controls, reduce, keyboardOpen]);
+    return () => clearTimeout(timer);
+  }, [open, keyboardOpen]);
   const closeForNavigation = () => {
     immediate.current = true;
     onClose();
@@ -69,11 +54,7 @@ export function CartDrawer({ open, onClose, lastAddedProductId, keyboardOpen = f
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <motion.div
-        className="cart-drawer"
-        initial={{ transform: 'translateX(100%)', opacity: 0 }}
-        animate={controls}
-      >
+      <div className="cart-drawer">
         <div className="drawer-heading">
           <div>
             <h2 id="drawer-title">
@@ -92,6 +73,7 @@ export function CartDrawer({ open, onClose, lastAddedProductId, keyboardOpen = f
             <StoreIcon name="close" />
           </button>
         </div>
+        <UndoToast />
         {items.length ? (
           <>
             <div className="drawer-content">
@@ -102,7 +84,7 @@ export function CartDrawer({ open, onClose, lastAddedProductId, keyboardOpen = f
               )}
               <CartLines lastAddedProductId={lastAddedProductId} onNavigate={closeForNavigation} />
             </div>
-            <OrderSummary quote={quote}>
+            <OrderSummary quote={quote} totalTestId="drawer-total">
               <Link className="os-button primary full" to="/checkout" onClick={closeForNavigation}>
                 Tiếp tục đặt hàng <StoreIcon name="arrow" size={18} />
               </Link>
@@ -123,7 +105,7 @@ export function CartDrawer({ open, onClose, lastAddedProductId, keyboardOpen = f
             </Link>
           </div>
         )}
-      </motion.div>
+      </div>
     </dialog>
   );
 }
