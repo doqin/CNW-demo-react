@@ -1,46 +1,95 @@
-import { useEffect, useState } from 'react';
-import { projects } from './lessons/index.js';
-import { Playground } from './playground/Playground.jsx';
-import { Icon } from './components/Icon.jsx';
-
-const initialEdits = () => Object.fromEntries(projects.map(project => [project.id, project.initialSources]));
-
+import { lazy, Suspense } from 'react';
+import { HashRouter, Route, Routes } from 'react-router';
+import { StorefrontProviders, useStore } from './storefront/StorefrontProviders.jsx';
+import { StorefrontLayout } from './storefront/StorefrontLayout.jsx';
+import { PageSkeleton } from './storefront/ui/PageSkeleton.jsx';
+import NotFoundPage from './storefront/ui/NotFoundPage.jsx';
+const Home = lazy(() => import('./storefront/home/HomePage.jsx'));
+const Catalog = lazy(() => import('./storefront/catalog/CatalogPage.jsx'));
+const Product = lazy(() => import('./storefront/product/ProductPage.jsx'));
+const Cart = lazy(() => import('./storefront/cart/CartPage.jsx'));
+const Checkout = lazy(() => import('./storefront/checkout/CheckoutPage.jsx'));
+const Confirmation = lazy(() => import('./storefront/checkout/ConfirmationPage.jsx'));
+const Group = lazy(() => import('./storefront/group/GroupPage.jsx'));
+const Learn = lazy(() => import('./features/learn/LearnApp.jsx'));
+function LearningRoute() {
+  const { theme, toggleTheme, resetStorefront } = useStore();
+  return (
+    <Suspense fallback={<PageSkeleton />}>
+      <Learn theme={theme} onToggleTheme={toggleTheme} onResetStorefront={resetStorefront} />
+    </Suspense>
+  );
+}
+function Page({ children }) {
+  return <Suspense fallback={<PageSkeleton />}>{children}</Suspense>;
+}
 export default function App() {
-  const [projectId, setProjectId] = useState(projects[0].id);
-  const [theme, setTheme] = useState('light');
-  const [pane, setPane] = useState('code');
-  const [edits, setEdits] = useState(initialEdits);
-  const [resets, setResets] = useState(0);
-  const project = projects.find(item => item.id === projectId);
-
-  useEffect(() => { document.documentElement.dataset.theme = theme; }, [theme]);
-
-  function resetCode() {
-    setEdits(current => ({ ...current, [project.id]: project.initialSources }));
-    setResets(count => count + 1);
-  }
-
-  return <div className="app">
-    <a className="skip-link" href="#main">Đến nội dung chính</a>
-    <header className="topbar">
-      <span className="brand">React Playground <small>SE347.R13</small></span>
-      <nav className="lesson-tabs" aria-label="Chọn bài">
-        {projects.map((item, index) => <button key={item.id} aria-current={item.id === projectId ? 'page' : undefined}
-          onClick={() => setProjectId(item.id)}><span>{String(index + 1).padStart(2, '0')}</span> {item.title}</button>)}
-      </nav>
-      <div className="pane-switch" role="group" aria-label="Chọn khung hiển thị">
-        <button aria-pressed={pane === 'code'} onClick={() => setPane('code')}>Code</button>
-        <button aria-pressed={pane === 'preview'} onClick={() => setPane('preview')}>Xem trước</button>
-      </div>
-      <div className="topbar-actions">
-        <button className="tool-button" onClick={resetCode} aria-label="Đặt lại code" title="Khôi phục code gốc của bài này"><Icon name="reset" size={16}/><span>Đặt lại code</span></button>
-        <button className="tool-button" onClick={() => setTheme(current => current === 'light' ? 'dark' : 'light')}
-          aria-label={`Chuyển sang giao diện ${theme === 'light' ? 'tối' : 'sáng'}`} title="Đổi sáng / tối"><Icon name={theme === 'light' ? 'moon' : 'sun'} size={16}/></button>
-      </div>
-    </header>
-    <main id="main" className="app-main">
-      <Playground key={`${project.id}-${resets}`} project={project} sources={edits[project.id]} pane={pane}
-        onSourcesChange={sources => setEdits(current => ({ ...current, [project.id]: sources }))}/>
-    </main>
-  </div>;
+  return (
+    <HashRouter>
+      <StorefrontProviders>
+        <Routes>
+          <Route path="learn" element={<LearningRoute />} />
+          <Route element={<StorefrontLayout />}>
+            <Route
+              index
+              element={
+                <Page>
+                  <Home />
+                </Page>
+              }
+            />
+            <Route
+              path="shop"
+              element={
+                <Page>
+                  <Catalog />
+                </Page>
+              }
+            />
+            <Route
+              path="products/:slug"
+              element={
+                <Page>
+                  <Product />
+                </Page>
+              }
+            />
+            <Route
+              path="cart"
+              element={
+                <Page>
+                  <Cart />
+                </Page>
+              }
+            />
+            <Route
+              path="checkout"
+              element={
+                <Page>
+                  <Checkout />
+                </Page>
+              }
+            />
+            <Route
+              path="group"
+              element={
+                <Page>
+                  <Group />
+                </Page>
+              }
+            />
+            <Route
+              path="orders/:orderId"
+              element={
+                <Page>
+                  <Confirmation />
+                </Page>
+              }
+            />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+        </Routes>
+      </StorefrontProviders>
+    </HashRouter>
+  );
 }

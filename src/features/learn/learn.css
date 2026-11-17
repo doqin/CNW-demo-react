@@ -1,0 +1,197 @@
+.learn-app { --hit: 36px; --topbar: 48px; }
+.learn-app * { box-sizing: border-box; }
+.learn-app, .learn-app, .learn-app { height: 100%; }
+.learn-app { color-scheme: light; background: var(--canvas); }
+html[data-theme='dark'] .learn-app { color-scheme: dark; }
+.learn-app { margin: 0; color: var(--ink); background: var(--canvas); font: 14px/1.5 var(--sans); -webkit-font-smoothing: antialiased; overflow: hidden; }
+.learn-app button, .learn-app input { font: inherit; }
+.learn-app button { cursor: pointer; color: inherit; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background-color 120ms ease; }
+.learn-app button:disabled { cursor: default; }
+.learn-app button:focus-visible, .learn-app a:focus-visible, .learn-app input:focus-visible, .learn-app summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.learn-app a { color: inherit; }
+.learn-app svg { flex-shrink: 0; vertical-align: middle; }
+.learn-app code, .learn-app kbd, .learn-app pre { font-family: var(--mono); }
+.learn-app button, .learn-app output, .learn-app strong { font-variant-numeric: tabular-nums; }
+.learn-app ::selection { background: var(--selection); }
+.learn-app * { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.learn-app h1, .learn-app h2, .learn-app h3, .learn-app p { margin: 0; }
+
+.learn-app .skip-link { position: fixed; top: 6px; left: 8px; z-index: 10; transform: translateY(-200%); background: var(--ink); color: var(--surface); padding: 8px 14px; border-radius: 5px; }
+.learn-app .skip-link:focus { transform: none; }
+
+/* ---- Shell ---- */
+.learn-app { height: 100dvh; display: grid; grid-template-rows: var(--topbar) minmax(0, 1fr); }
+.learn-app .topbar { display: flex; align-items: center; gap: 20px; padding: 0 12px 0 16px; background: var(--surface); border-bottom: 1px solid var(--border); }
+.learn-app .brand { font-weight: 600; white-space: nowrap; }
+.learn-app .brand small { font: 400 12px var(--mono); color: var(--muted); margin-left: 8px; }
+.learn-app .lesson-tabs { display: flex; align-self: stretch; gap: 4px; }
+.learn-app .lesson-tabs button { border: 0; border-bottom: 2px solid transparent; background: transparent; padding: 2px 12px 0; color: var(--muted); white-space: nowrap; }
+.learn-app .lesson-tabs button span { font: 11px var(--mono); margin-right: 4px; }
+.learn-app .lesson-tabs button:hover { color: var(--ink); }
+.learn-app .lesson-tabs button[aria-current] { color: var(--ink); font-weight: 600; border-bottom-color: var(--ink); }
+.learn-app .topbar-actions { margin-left: auto; display: flex; gap: 4px; }
+.learn-app .tool-button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-width: var(--hit); height: var(--hit); padding: 0 10px; border: 1px solid transparent; border-radius: 6px; background: transparent; color: var(--muted); font-size: 13px; }
+.learn-app .tool-button:hover { background: var(--surface-hover); color: var(--ink); }
+.learn-app .pane-switch { display: none; }
+.learn-app .app-main { min-height: 0; }
+
+.learn-app .workspace { height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.learn-app .pane { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+
+/* ---- Code pane ---- */
+.learn-app .pane-code { background: var(--code-bg); border-right: 1px solid var(--border); }
+.learn-app .lesson-note { flex: none; max-height: 40%; overflow: auto; padding: 8px 16px 10px; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+.learn-app .lesson-note summary { display: flex; align-items: baseline; gap: 10px; cursor: pointer; color: var(--ink); font-weight: 600; }
+.learn-app .lesson-note summary small { font-weight: 400; color: var(--muted); font-size: 12px; }
+.learn-app .lesson-points, .learn-app .lesson-steps { margin: 8px 0 0; padding-left: 18px; }
+.learn-app .lesson-points li, .learn-app .lesson-steps li { margin-top: 2px; }
+.learn-app .lesson-steps-label { margin-top: 8px; font-weight: 600; color: var(--ink); }
+.learn-app .lesson-steps { margin-top: 2px; }
+.learn-app .file-tabs { flex: none; display: flex; overflow-x: auto; background: var(--surface); border-bottom: 1px solid var(--border); }
+.learn-app .file-tabs button { flex: none; height: 34px; padding: 0 14px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--muted); font: 12.5px var(--mono); }
+.learn-app .file-tabs button:hover { color: var(--ink); }
+.learn-app .file-tabs button[aria-selected='true'] { color: var(--ink); background: var(--code-bg); border-bottom-color: var(--sage-ink); margin-bottom: -1px; }
+.learn-app .editor-panel { flex: 1; min-height: 0; overflow: auto; }
+.learn-app .editor-panel:focus-within { box-shadow: inset 0 0 0 2px var(--focus); }
+.learn-app .editor { display: flex; min-height: 100%; font: 14px/1.6 var(--mono); color: var(--ink); }
+.learn-app .editor-gutter { position: sticky; left: 0; z-index: 1; flex: none; padding: 12px 12px 12px 14px; background: var(--code-bg); color: var(--code-gutter); text-align: right; user-select: none; font-size: 12px; }
+.learn-app .editor-gutter span { display: block; }
+.learn-app .editor-stack { position: relative; flex: 1; min-width: max-content; }
+.learn-app .editor-highlight, .learn-app .editor-input { margin: 0; padding: 12px 24px 12px 4px; border: 0; font: inherit; letter-spacing: 0; tab-size: 2; white-space: pre; overflow-wrap: normal; word-break: normal; }
+.learn-app .editor-highlight { position: relative; pointer-events: none; }
+.learn-app .editor-highlight code { font: inherit; }
+.learn-app .editor-input { position: absolute; inset: 0; width: 100%; height: 100%; resize: none; overflow: hidden; background: transparent; color: transparent; caret-color: var(--ink); outline: none; }
+.learn-app .editor-input::selection { background: color-mix(in srgb, var(--focus) 40%, transparent); color: transparent; }
+.learn-app .tok-comment { color: var(--tok-comment); font-style: italic; }
+.learn-app .tok-string { color: var(--tok-string); }
+.learn-app .tok-number, .learn-app .tok-literal { color: var(--tok-number); }
+.learn-app .tok-keyword { color: var(--tok-keyword); }
+.learn-app .tok-tag { color: var(--tok-tag); }
+.learn-app .tok-builtin { color: var(--tok-builtin); }
+.learn-app .compile-error { flex: none; max-height: 30%; overflow: auto; padding: 8px 16px; background: var(--danger-soft); border-top: 1px solid var(--danger); color: var(--danger); font-size: 13px; }
+.learn-app .compile-error pre, .learn-app .preview-error pre { margin: 4px 0 0; white-space: pre-wrap; font-size: 12.5px; }
+.learn-app .editor-hint { flex: none; padding: 6px 16px; background: var(--surface); border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); }
+.learn-app kbd { font-size: 11px; padding: 1px 5px; background: var(--canvas); border: 1px solid var(--border); border-radius: 3px; }
+
+/* ---- Preview pane ---- */
+.learn-app .pane-preview { background: var(--canvas); }
+.learn-app .pane-header { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 34px; padding: 0 16px; border-bottom: 1px solid var(--border); background: var(--surface); }
+.learn-app .pane-header h2 { font-size: 13px; font-weight: 600; }
+.learn-app .status { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.learn-app .status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--sage); }
+.learn-app .status[data-state='pending']::before { background: var(--subtle); }
+.learn-app .status[data-state='error'] { color: var(--danger); }
+.learn-app .status[data-state='error']::before { background: var(--danger); }
+.learn-app .preview-scroll { flex: 1; min-height: 0; overflow: auto; container: preview / inline-size; }
+.learn-app .preview-surface { padding: 20px; font: 15px/1.5 var(--sans); }
+.learn-app .preview-empty { padding: 20px; color: var(--muted); }
+.learn-app .preview-error { padding: 12px 14px; background: var(--danger-soft); border: 1px solid var(--danger); border-radius: 6px; color: var(--danger); }
+
+/* ---- Previewed apps (the code students edit renders these classes) ---- */
+.learn-app .preview-surface h2, .learn-app .preview-surface h3 { font-weight: 600; }
+.learn-app .preview-surface button { min-height: var(--hit); }
+.learn-app .button { display: inline-flex; justify-content: center; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; font-weight: 500; white-space: nowrap; }
+.learn-app .button-primary { background: var(--button); color: var(--button-text); border-color: var(--button); }
+.learn-app .button-primary:hover { background: var(--button-hover); }
+.learn-app .button-secondary { background: var(--surface); color: var(--ink); }
+.learn-app .button-secondary:hover { background: var(--surface-hover); }
+.learn-app .icon-button { width: var(--hit); height: var(--hit); min-height: 0; display: inline-flex; justify-content: center; align-items: center; border: 0; background: transparent; border-radius: 6px; }
+.learn-app .icon-button:hover { background: var(--surface-hover); }
+
+.learn-app .shop-bar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 12px; margin-bottom: 16px; border-bottom: 1px solid var(--border); font-weight: 600; }
+.learn-app .cart-badge { display: flex; gap: 8px; align-items: center; font-size: 14px; font-weight: 400; }
+.learn-app .cart-badge strong { font-size: 12px; line-height: 22px; min-width: 22px; text-align: center; background: var(--sage-soft); color: var(--sage-ink); border-radius: 5px; padding: 0 5px; }
+.learn-app .shop-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; align-items: start; }
+@container preview (min-width: 560px) { .learn-app .shop-layout { grid-template-columns: minmax(0, 1fr) 232px; } .learn-app .cart-panel { position: sticky; top: 0; } }
+@container preview (min-width: 960px) { .learn-app .shop-layout { grid-template-columns: minmax(0, 1fr) 280px; } }
+.learn-app .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.learn-app .product-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; min-width: 0; }
+.learn-app .product-art { background: #edf1e7; height: 108px; border-radius: 6px; display: flex; justify-content: center; overflow: hidden; }
+.learn-app .product-art svg { width: 100%; height: 100%; }
+.learn-app .art-P02 { background: #f6ede2; }
+.learn-app .art-P03 { background: #eaf0f1; }
+.learn-app .product-copy { margin: 12px 0 8px; }
+.learn-app .product-copy h3 { font-size: 17px; margin-bottom: 2px; }
+.learn-app .product-copy p { color: var(--muted); font-size: 12px; }
+.learn-app .product-price { font-size: 17px; font-weight: 600; margin-bottom: 10px; }
+.learn-app .product-price span { font-size: 11px; font-weight: 400; color: var(--muted); white-space: nowrap; }
+.learn-app .quantity-picker { display: inline-flex; border: 1px solid var(--border); border-radius: 6px; align-items: center; }
+.learn-app .quantity-picker button { width: var(--hit); height: var(--hit); padding: 0; border: 0; border-radius: 5px; background: transparent; display: grid; place-items: center; }
+.learn-app .quantity-picker button:not(:disabled):hover { background: var(--surface-hover); }
+.learn-app .quantity-picker button:disabled { color: var(--subtle); }
+.learn-app .quantity-picker output { width: 34px; text-align: center; font-size: 15px; font-weight: 600; }
+.learn-app .product-subtotal { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 12px 0 10px; }
+.learn-app .product-subtotal > span { font-size: 12px; color: var(--muted); }
+.learn-app .product-subtotal strong { font-size: 16px; }
+.learn-app .add-button { width: 100%; justify-content: space-between; padding: 6px 10px 6px 12px; font-size: 13px; }
+.learn-app .cart-panel { border: 1px solid var(--border); border-radius: 8px; background: var(--surface); padding: 16px; display: flex; flex-direction: column; min-width: 0; }
+.learn-app .cart-heading { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.learn-app .cart-heading h2 { font-size: 16px; }
+.learn-app .cart-heading > svg { color: var(--sage-ink); }
+.learn-app .cart-items { min-height: 84px; }
+.learn-app .empty-cart { padding: 20px 0 10px; text-align: center; }
+.learn-app .empty-cart h3 { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.learn-app .empty-cart p { font-size: 12px; color: var(--muted); }
+.learn-app .cart-items ul { padding: 0; margin: 0; list-style: none; }
+.learn-app .cart-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.learn-app .small-art { width: 40px; height: 48px; border-radius: 4px; flex-shrink: 0; }
+.learn-app .small-art svg { width: 64px; max-width: none; }
+.learn-app .cart-item-copy { display: flex; flex-direction: column; min-width: 0; }
+.learn-app .cart-item-copy strong { font-size: 14px; font-weight: 500; }
+.learn-app .cart-item-copy > span { color: var(--muted); font-size: 13px; white-space: nowrap; }
+.learn-app .remove-item { margin-left: auto; color: var(--muted); }
+.learn-app .receipt-totals { border-top: 1px dashed var(--receipt-line); padding-top: 12px; margin-top: 12px; }
+.learn-app .receipt-row { display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: var(--muted); }
+.learn-app .receipt-row strong { font-weight: 500; color: var(--ink); }
+.learn-app .receipt-total { display: flex; flex-direction: column; margin-top: 8px; }
+.learn-app .receipt-total > span { color: var(--muted); font-size: 12px; }
+.learn-app .receipt-total > strong { font-size: 26px; font-weight: 500; line-height: 1.2; }
+
+.learn-app .comparison-toolbar { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px; margin-bottom: 16px; }
+.learn-app .note-field { flex: 1 1 220px; }
+.learn-app .note-field label { display: block; font-size: 12px; margin-bottom: 4px; font-weight: 500; }
+.learn-app .note-field input { width: 100%; height: 40px; border: 1px solid var(--border); border-radius: 6px; color: var(--ink); padding: 6px 12px; background: var(--surface); font-size: 15px; }
+.learn-app .note-field input::placeholder { color: var(--subtle); }
+.learn-app .comparison-toolbar .button { min-height: 40px; }
+.learn-app .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
+.learn-app .comparison-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; min-width: 0; }
+.learn-app .memo-card { border-color: var(--sage-border); }
+.learn-app .comparison-card-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.learn-app .comparison-card-heading h2 { font-size: 16px; }
+.learn-app .comparison-card-heading > code { background: var(--canvas); font-size: 11px; padding: 2px 6px; border-radius: 4px; color: var(--muted); }
+.learn-app .memo-card .comparison-card-heading > code { background: var(--sage-soft); color: var(--sage-ink); }
+.learn-app .render-stat { display: flex; gap: 12px; align-items: center; margin: 12px 0 8px; }
+.learn-app .render-stat output { font-size: 40px; line-height: 1.1; }
+.learn-app .render-stat > span { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.learn-app .memo-card .render-stat output { color: var(--sage-ink); }
+.learn-app .sales-chart { display: block; width: 100%; height: 130px; }
+.learn-app .chart-gridline { stroke: var(--border); stroke-width: 1; }
+.learn-app .chart-gridline.faint { stroke-dasharray: 3 6; }
+.learn-app .chart-bar { fill: var(--chart-muted); }
+.learn-app .bar-2, .learn-app .bar-5 { fill: var(--chart-strong); }
+.learn-app .sales-chart text { font: 11px var(--sans); fill: var(--muted); }
+.learn-app .chart-caption { border-top: 1px solid var(--border); padding-top: 8px; margin-top: 8px; font-size: 12px; color: var(--muted); }
+.learn-app .measurement-note { margin-top: 12px; color: var(--muted); font-size: 12px; }
+
+/* ---- Small screens and touch ---- */
+@media (max-width: 899px), (pointer: coarse) { .learn-app { --hit: 44px; } }
+@media (max-width: 899px) {
+  .learn-app { grid-template-rows: auto minmax(0, 1fr); }
+  .learn-app .topbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'tabs actions' 'switch switch'; gap: 0 8px; padding: 0 8px 8px; }
+  .learn-app .brand { display: none; }
+  .learn-app .lesson-tabs { grid-area: tabs; min-height: var(--hit); overflow-x: auto; }
+  .learn-app .lesson-tabs button { padding: 0 10px; }
+  .learn-app .lesson-tabs button span { display: none; }
+  .learn-app .topbar-actions { grid-area: actions; margin-left: 0; align-self: center; }
+  .learn-app .tool-button span { display: none; }
+  .learn-app .pane-switch { grid-area: switch; display: grid; grid-template-columns: 1fr 1fr; padding: 3px; background: var(--canvas); border: 1px solid var(--border); border-radius: 8px; }
+  .learn-app .pane-switch button { min-height: 38px; border: 0; border-radius: 6px; background: transparent; color: var(--muted); }
+  .learn-app .pane-switch button[aria-pressed='true'] { background: var(--surface); color: var(--ink); font-weight: 600; box-shadow: 0 0 0 1px var(--border); }
+  .learn-app .workspace { grid-template-columns: minmax(0, 1fr); }
+  .learn-app .workspace[data-pane='code'] .pane-preview, .learn-app .workspace[data-pane='preview'] .pane-code { display: none; }
+  .learn-app .pane-code { border-right: 0; }
+  .learn-app .lesson-note { max-height: 34%; }
+  .learn-app .editor { font-size: 13px; }
+  .learn-app .preview-surface { padding: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { .learn-app button { transition: none; } }

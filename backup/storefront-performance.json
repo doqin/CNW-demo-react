@@ -1,0 +1,30 @@
+{
+  "capturedAt": "2026-11-17T18:35:00.849Z",
+  "browser": "156.0.8078.4",
+  "profile": "Local production preview, 1440x900, fresh contexts/cache disabled, CPU 4x, RTT 40ms, download 4Mbps, upload 2Mbps; observe 1.5s after hero/fonts ready",
+  "runs": [
+    {
+      "lcpMs": 2512,
+      "cls": 0.04850202285075875,
+      "transferBytes": 541920,
+      "learningChunkLoaded": false
+    },
+    {
+      "lcpMs": 2396,
+      "cls": 0.04870369414236647,
+      "transferBytes": 541920,
+      "learningChunkLoaded": false
+    },
+    {
+      "lcpMs": 2444,
+      "cls": 0.04860411931209277,
+      "transferBytes": 541920,
+      "learningChunkLoaded": false
+    }
+  ],
+  "median": {
+    "lcpMs": 2444,
+    "cls": 0.04860411931209277
+  },
+  "limitation": "Navigation lab samples only. INP and field Core Web Vitals are not measured."
+}

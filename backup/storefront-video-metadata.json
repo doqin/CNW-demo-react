@@ -1,0 +1,9 @@
+{
+  "capturedAt": "2026-11-17T18:36:21.823Z",
+  "duration": "00:00:30.92",
+  "width": 1440,
+  "height": 900,
+  "audio": false,
+  "source": "Working tree on feat/complete-storefront before its implementation commit",
+  "sequence": "Home → catalog/search → detail → cart → checkout without QR → order → editable QR → React Lab"
+}

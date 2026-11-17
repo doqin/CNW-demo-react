@@ -1,81 +1,67 @@
-# React Playground — SE347.R13
+# OneSip
 
-Một sân chơi React (code bên trái, kết quả bên phải) với một cửa hàng nhỏ để minh họa **props/state, Context và React.memo** trong một lượt demo 5–10 phút. Chuẩn bị cho seminar ngày **18/11/2026**, người phụ trách demo: **Trần Hữu Quốc Hướng**.
+MVP cửa hàng **React** cho SE347.R13: thức uống, bình nước và những khoảng nghỉ dễ chịu. Giao diện cam quýt – vàng nắng – xanh lá, ảnh sản phẩm riêng, animation có reduced motion và skeleton khi tải nội dung.
 
-![Màn cửa hàng](docs/images/shop.png)
+![OneSip](docs/images/storefront/home-preview.png)
 
-## Chạy demo
+## Chạy ứng dụng
 
-Máy đã xác minh: **Node 22.17.0**, npm 10.9.2. Dùng Node 22.17 trở lên trong nhánh 22 hoặc Node 24+.
+Node đã dùng: **22.17.0**. Repo hỗ trợ Node22.17+ trong nhánh22 hoặc Node24+.
 
 ```powershell
-cd D:\Hoc\HK5\SE347-React-Seminar-Demo
 npm ci
 npm run build
 npm run preview
 ```
 
-Mở **[http://127.0.0.1:4173](http://127.0.0.1:4173)**. Giữ terminal chạy. Chuẩn bị trước giờ lên trình bày; đến lượt demo chỉ cần chạy `npm run preview` và mở trình duyệt.
+Mở **[OneSip tại localhost:4173](http://127.0.0.1:4173/)**. Khi phát triển chạy `npm run dev`. Sau khi cài/build, ảnh, font và mã QR đều chạy local; không cần tài khoản, API ngân hàng hoặc Internet để demo. Không mở `dist/index.html` trực tiếp qua `file://`.
 
-`npm ci` cần Internet trong lần chuẩn bị. Sau khi đã cài và build, app chỉ dùng file local, không cần mạng ngoài, tài khoản, API hoặc extension trình duyệt. Nếu cổng 4173 đang được sử dụng, preview báo lỗi để bạn xử lý trước khi trình bày.
+## MVP có gì
 
-Để phát triển và sửa code: `npm run dev`, mở cổng 5173. **Lúc trình bày dùng preview**, vì số đếm được xác minh trên production build. Không mở `dist/index.html` bằng `file://`.
+- Home và catalog12 sản phẩm; tìm tiếng Việt không phân biệt dấu, lọc và sắp xếp.
+- Trang chi tiết, chọn số lượng, cart drawer/trang giỏ, giới hạn tồn mẫu, lưu giỏ qua reload.
+- Guest checkout có validation, thông tin mẫu, retry, chống tạo đơn lặp và hủy khi rời trang.
+- VietQR **MBBank – 0825730557** chỉ hiện sau khi bấm **Đặt hàng**; tạo local, chỉnh số tiền sẽ tạo lại mã. Có tải ảnh QR và sao chép tài khoản.
+- Biên nhận đơn mẫu, khôi phục đơn gần nhất trong phiên. Chuyển khoản luôn ghi **chờ xác nhận**, không tự báo đã nhận tiền.
+- Responsive, dark mode, thao tác bàn phím, native dialog, loading skeleton cho route/ảnh/QR.
+- [React Lab](http://127.0.0.1:4173/#/learn) giữ sân chơi code bên trái/kết quả bên phải và các bài props/state, Context, `React.memo`.
 
-## Cách dùng
+Đây là **frontend MVP**: chưa có backend quản lý đơn, kho dùng chung, xác thực hoặc webhook đối soát ngân hàng. Không cần chuyển tiền để trải nghiệm. QR dùng tài khoản thật; cần kiểm tra người nhận/số tiền trong ứng dụng ngân hàng trước giao dịch. Chưa kiểm bằng app ngân hàng thật.
 
-Màn hình chia đôi: **code bên trái, kết quả bên phải**. Sửa code, khoảng 0,3 giây sau phần xem trước tự chạy lại. Nếu code sai cú pháp, lỗi hiện ngay dưới trình soạn thảo và bản chạy gần nhất vẫn được giữ. **Đặt lại code** khôi phục code gốc của bài đang mở. Nút sáng/tối ở góc phải. Trong trình soạn thảo, `Tab` thụt lề, `Shift+Tab` bỏ thụt lề, `Esc` rồi `Tab` để rời khỏi.
+## Một lượt demo nhanh
 
-## Một lượt trình bày
+Thêm **Bình nước ×2 + Trà đào ×1** → giỏ 3 đơn vị, tiền hàng 125.000đ, phí 20.000đ, tổng **145.000đ**. Mở checkout, bấm **Điền thông tin mẫu** rồi **Đặt hàng**. QR xuất hiện trên trang biên nhận; thử đổi số tiền thành 250000 rồi trả về 145000.
 
-1. **Props và state:** tăng Bình nước lên 2. Thành tiền là 100.000 đ; hai thẻ còn lại vẫn giữ số lượng 1. Trong `ProductCard.jsx` đổi `useQuantity()` thành `useQuantity(3)` để thấy mọi thẻ bắt đầu từ 3.
-2. **Context:** thêm Bình nước ×2 và Trà đào ×1. Huy hiệu là **3**, giỏ có **2 dòng**, tổng **125.000 đ**. Mở tab `CartContext.jsx` để giải thích nguồn state chung.
-3. **memo:** chuyển sang **So sánh render**, bấm **Bắt đầu phép đo**, gõ từng ký tự `react`. Kết quả **5 / 0**. Bấm **Đổi dữ liệu**, kết quả **6 / 1**. Trong `SalesChart.jsx` đổi `memo(SalesChart)` thành `SalesChart` rồi đo lại: hai bên cùng tăng.
+Trong React Lab, cùng fixture hiển thị **125.000đ** chưa có phí; gõ `react` sau Bắt đầu phép đo cho **5/0**, Đổi dữ liệu cho **6/1**. Playground tiếp tục dùng source thật, có live edit, lỗi biên dịch và reset code.
 
-Mỗi bài giữ code đã sửa khi chuyển qua lại giữa hai bài; tải lại trang sẽ xóa mọi chỉnh sửa. Ghi chú không ảnh hưởng dữ liệu biểu đồ; bộ đếm ghi lại Effect theo dõi sau commit, không đếm mọi lần gọi hàm render hoặc số nút DOM bị sửa. Mỗi lần code chạy lại, phần xem trước được dựng lại từ đầu và bộ đếm về 0.
+## Hướng dẫn và kiểm tra
 
-## Tài liệu để tập trước buổi seminar
-
-| Tài liệu | Dùng khi |
-| --- | --- |
-| [Kịch bản 5 / 7 / 10 phút](docs/demo-script.md) | Tập lời nói và từng thao tác |
-| [Đối chiếu slide với mã nguồn](docs/slide-mapping.md) | Nối phần demo với nội dung nhóm trình bày |
-| [Checklist diễn tập và xử lý sự cố](docs/rehearsal.md) | Chuẩn bị trước ngày và trước giờ lên demo |
-| [Câu hỏi đáp](docs/qa.md) | Ôn các câu hỏi dễ được hỏi |
-| [Quyết định thiết kế](docs/design-notes.md) | Hiểu giao diện và phần đo được tổ chức ra sao |
-| [Bằng chứng kiểm tra](docs/verification.md) | Xem số liệu, môi trường và giới hạn đã xác minh |
-| [Video dự phòng khoảng 5 phút](backup/demo-5min.mp4) | Phát file local và tự thuyết minh khi app gián đoạn |
-
-Video không có lời, để bạn nói theo kịch bản. Tải về hoặc mở file local để phát, không phụ thuộc khả năng preview MP4 của GitHub. Ba ảnh dự phòng cũng nằm trong thư mục [backup](backup/).
-
-## Kiểm tra và quay lại video
+- [Hướng dẫn sử dụng, QR, reset và trình diễn](docs/onesip-guide.md).
+- [Kết quả kiểm tra MVP](docs/onesip-verification.md).
+- [Nguồn ảnh, font và prompt](docs/design/asset-manifest.md).
+- [Kịch bản seminar React](docs/demo-script.md): bắt đầu ở `/learn`.
+- [Nhật ký quyết định triển khai](docs/onesip-implementation.md).
 
 ```powershell
 npm run lint
 npm test
 npm run build
-npx playwright install chromium
 npm run test:e2e
 ```
 
-Unit/component tests kiểm trình biên dịch trong trình duyệt, state, giỏ, bộ đo và luồng sửa code. Playwright chạy luồng thật trên preview: sửa code và thấy kết quả, lỗi cú pháp, đặt lại, thao tác bàn phím trong trình soạn thảo, theme, request chỉ về localhost, bố cục chia đôi ở 1280×720, 1366×768, 1920×1080 và bố cục điện thoại 390×844. Cấu hình tự khởi động preview nếu chưa chạy.
+Test E2E dùng production preview4173. Đảm bảo preview phục vụ `dist` mới nhất. Vitest kiểm state/cart, checkout, receipt hỏng, TLV/CRC và giải mã ảnh QR độc lập; Playwright kiểm mua hàng, loading, QR chỉnh tiền, retry/abort, bàn phím, viewport và hồi quy lesson.
 
-Để quay lại video: khởi động preview ở một terminal, rồi chạy `npm run record` ở terminal khác. Script điều khiển app thật khoảng 5 phút, xác nhận số đo và tạo MP4 bằng ffmpeg. Phần quay dùng Playwright và ffmpeg-static trong dev dependencies; các gói này không được gửi vào bản web build.
-
-## Cấu trúc cần biết
+## Cấu trúc chính
 
 ```text
-src/lessons/shop/*                       code học viên sửa được ở bài 1 (ProductCard, useQuantity, CartContext, CartPanel, App)
-src/lessons/render/*                     code sửa được ở bài 2 (SalesChart, App)
-src/lessons/index.js                     danh sách bài, ghi chú, file nào hiện ở tab nào
-src/playground/compile.js                biên dịch JSX bằng sucrase và chạy các file trong trình duyệt
-src/playground/Playground.jsx            trình soạn thảo bên trái, xem trước bên phải
-src/features/render/metricsStore.js      kho số liệu quan sát tách riêng
-src/components, src/data                 phần dùng chung, không sửa trong bài
-src/tokens.css                           màu, font và màu cú pháp của cả hai theme
+src/storefront/           storefront, catalog, cart, checkout, QR và giao diện
+src/features/learn/      shell Playground và CSS riêng
+src/lessons/             mã React sửa trực tiếp trong bài giảng
+src/playground/          compiler và editor, lazy-load khi vào /learn
+public/images/storefront ảnh WebP local
+public/fonts/            font local và giấy phép OFL
 ```
 
-Các file trong `src/lessons` là module thật với import tương đối thật; chính chúng được nạp bằng `?raw` vào trình soạn thảo và chạy lại khi bạn sửa. Chỉ import `react` và các file trong bài (hoặc các module dùng chung có sẵn trong `src/components`, `src/data`).
+Cấu hình tài khoản nhận ở `src/storefront/checkout/vietqr.js`; giữ account dạng chuỗi. Palette ở `src/tokens.css` và phần bright edition trong `src/storefront/storefront.css`. Ảnh/font và dữ liệu lesson độc lập với catalog storefront.
 
-Không bật React Compiler để minh họa riêng tác dụng của `memo`. Không dùng Redux/Zustand/Next.js cho demo nhỏ này. Đây là ví dụ giảng dạy; dữ liệu chỉ giữ trong bộ nhớ và được xóa khi tải lại trang.
-
-Nhánh `main` là bản diễn tập ổn định, `develop` dành cho tích hợp, thay đổi mới làm qua nhánh `feat/...`. Code mới được phát hành theo [MIT](LICENSE). Slide nguồn không nằm trong repo public; chỉ đối chiếu tên và số slide.
+Nhánh làm việc: **`feat/complete-storefront`**, tách từ `main@57f3fcc`. Không push/merge vào `develop`. Không có deploy tự động trong thay đổi này. Mã nguồn minh họa theo MIT; ảnh AI và font có nguồn riêng trong asset manifest.

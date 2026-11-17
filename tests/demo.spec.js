@@ -18,7 +18,7 @@ test('edit the code on the left and the app on the right changes, fully offline'
     if (url.hostname !== '127.0.0.1') { external.push(url.href); return route.abort(); }
     return route.continue();
   });
-  await page.goto('/');
+  await page.goto('/#/learn');
 
   // Lesson 1: props, state and Context work in the preview.
   await page.getByRole('button', { name: 'Tăng Bình nước', exact: true }).click();
@@ -77,7 +77,7 @@ test('edit the code on the left and the app on the right changes, fully offline'
 });
 
 test('the editor behaves like a code editor: Tab indents, Enter keeps indentation, Esc then Tab leaves', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/#/learn');
   const editor = editorOf(page, 'ProductCard.jsx');
   await editor.focus();
   await editor.evaluate(element => { element.setSelectionRange(0, 0); });
@@ -102,7 +102,7 @@ test('the editor behaves like a code editor: Tab indents, Enter keeps indentatio
 test('desktop shows code and preview side by side without page scrolling', async ({ page }) => {
   for (const viewport of [{ width: 1280, height: 720 }, { width: 1366, height: 768 }, { width: 1920, height: 1080 }]) {
     await page.setViewportSize(viewport);
-    await page.goto('/');
+    await page.goto('/#/learn');
     for (const lesson of ['Cửa hàng', 'So sánh render']) {
       await page.getByRole('button', { name: new RegExp(lesson) }).click();
       const size = await page.evaluate(() => ({ width: document.documentElement.scrollWidth, height: document.documentElement.scrollHeight }));
@@ -118,7 +118,7 @@ test('desktop shows code and preview side by side without page scrolling', async
 
 test('phone layout switches between code and preview and keeps touch targets usable', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/');
+  await page.goto('/#/learn');
   await expect(page.getByRole('region', { name: 'Xem trước' })).toBeHidden();
   await expect(editorOf(page, 'ProductCard.jsx')).toBeVisible();
   await page.getByRole('button', { name: 'Xem trước', exact: true }).click();

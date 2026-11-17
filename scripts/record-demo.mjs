@@ -16,7 +16,7 @@ const context = await browser.newContext({
   recordVideo: { dir: scratch, size: { width: 1280, height: 720 } },
 });
 const page = await context.newPage();
-await page.goto('http://127.0.0.1:4173');
+await page.goto('http://127.0.0.1:4173/#/learn');
 await page.addStyleTag({ content: `#record-cursor{position:fixed;left:1100px;top:100px;z-index:2147483647;pointer-events:none;width:23px;height:28px;filter:drop-shadow(0 1px 2px #6665)}` });
 await page.evaluate(() => {
   const cursor = document.createElement('div');

@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { beforeEach, expect, it } from 'vitest';
-import App from './App.jsx';
+import App from './features/learn/LearnApp.jsx';
 import { metricsStore } from './features/render/metricsStore.js';
 
 beforeEach(() => metricsStore.reset());
